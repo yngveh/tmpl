@@ -2,10 +2,17 @@
 .PHONY: default
 default: build
 
-.PHONY: build
-build:
-	@go fmt main.go
+.PHONY: test
+test:
+	@go vet .
+	@go vet ./pkg/...
+	@go fmt .
 	@go fmt ./pkg/...
+	@go test .
+	@go test ./pkg/...
+
+.PHONY: build
+build: test
 	@go build -o target/tmpl main.go
 
 .PHONY: run
@@ -15,4 +22,4 @@ run: build
 
 .PHONY: clean
 clean:
-	rm -f target
+	rm -fr target
