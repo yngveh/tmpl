@@ -2,32 +2,15 @@ package main
 
 import (
 	"flag"
+	"github.com/yngveh/tmpl/pkg/engine"
 	"io"
 	"os"
-	"path"
-	"text/template"
 )
-
-var funcMap = template.FuncMap{
-	"Env": envFunc,
-}
 
 func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func envFunc(env string) string {
-	return os.Getenv(env)
-}
-
-func process(filename *string, out io.Writer) {
-	t, err := template.New("").Funcs(funcMap).ParseFiles(*filename)
-	checkError(err)
-	_, tmplName := path.Split(*filename)
-	err = t.ExecuteTemplate(out, tmplName, nil)
-	checkError(err)
 }
 
 func main() {
@@ -52,6 +35,6 @@ func main() {
 		out = os.Stdout
 	}
 
-	process(tmplFlag, out)
+	engine.Process(tmplFlag, out)
 
 }
