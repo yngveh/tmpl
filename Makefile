@@ -15,6 +15,10 @@ test:
 build: test
 	@go build -o target/tmpl main.go
 
+.PHONY: install
+install: build
+	@cp target/tmpl $(GOPATH)/bin
+
 .PHONY: run
 run: build
     @MYVAR=myvar ./target/tmpl -tmpl=./test/template-test.tpl
