@@ -15,6 +15,7 @@ tmpl \
 | Function    | Example                                    |
 |-------------|--------------------------------------------|
 | Env         | {{ Env "MYVAR" }}                          | 
+| Format      | {{ Format "%s - %s" "Test1" "Test2" }}     |
 | ToUpper     | {{ ToUpper "Text" }}                       |
 | ToLower     | {{ ToLower "Text" }}                       |
 | Repeat      | {{ Repeat "TEXT" 3 }}                      | 

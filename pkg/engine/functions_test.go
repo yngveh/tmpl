@@ -18,6 +18,11 @@ func Test_should_process_file(t *testing.T) {
 	assertString("sometext", result, t)
 }
 
+func Test_should_process_format(t *testing.T) {
+	result := executeTemplate("{{ Format \"%s-%s\" \"var1\" \"var2\" }}", t)
+	assertString("var1-var3", result, t)
+}
+
 func Test_should_process_strings_functions(t *testing.T) {
 	source := `
 ToUpper       : {{ ToUpper "Text" }}

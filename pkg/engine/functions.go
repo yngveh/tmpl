@@ -1,6 +1,7 @@
 package engine
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -12,6 +13,7 @@ var funcMap = template.FuncMap{
 	"Env":       envFunc,
 	"File":      fileFunc,
 	"Date":      dateFunc,
+	"Format":    format,
 	"ToUpper":   strings.ToUpper,
 	"ToLower":   strings.ToLower,
 	"Title":     strings.Title,
@@ -28,10 +30,14 @@ func envFunc(env string) string {
 func fileFunc(filename string) string {
 	content, err := ioutil.ReadFile(filename)
 	checkError(err)
-	return (string(content))
+	return string(content)
 }
 
 func dateFunc() string {
 	t := time.Now()
 	return t.Format(time.RFC3339)
+}
+
+func format(text string, a ...interface{}) string {
+	return fmt.Sprintf(text, a...)
 }
