@@ -14,3 +14,6 @@ indent_style = tab
 
 [*.txt]
 insert_final_newline = false
+
+[*.tpl]
+insert_final_newline = false
