@@ -10,4 +10,6 @@ TrimSpace     : {{ TrimSpace " ! Text ! " }}
 File          : {{ File "./test/a_file.txt" }}
 File->ToUpper : {{ File "./test/a_file.txt" | ToUpper }}
 Date          : {{ Date }}
+Data          : {{ .root.var1 }}
+
 ======= END OF TEMPLATE ========

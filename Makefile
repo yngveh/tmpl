@@ -21,8 +21,8 @@ install: build
 
 .PHONY: run
 run: build
-    @MYVAR=myvar ./target/tmpl -tmpl=./test/template-test.tpl
-    @MYVAR=myvar ./target/tmpl -tmpl=./test/template-test.tpl -dest=./target/result.txt
+	@MYVAR=myvar ./target/tmpl -tmpl=./test/template-test.tpl -data=./test/test-data.yaml
+	@MYVAR=myvar ./target/tmpl -tmpl=./test/template-test.tpl -data=./test/test-data.yaml -dest=./target/result.txt
 
 .PHONY: clean
 clean:

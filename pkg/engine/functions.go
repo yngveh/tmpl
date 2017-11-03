@@ -13,7 +13,7 @@ var funcMap = template.FuncMap{
 	"Env":       envFunc,
 	"File":      fileFunc,
 	"Date":      dateFunc,
-	"Format":    format,
+	"Format":    formatFunc,
 	"ToUpper":   strings.ToUpper,
 	"ToLower":   strings.ToLower,
 	"Title":     strings.Title,
@@ -29,7 +29,9 @@ func envFunc(env string) string {
 
 func fileFunc(filename string) string {
 	content, err := ioutil.ReadFile(filename)
-	checkError(err)
+	if err != nil {
+		panic(err)
+	}
 	return string(content)
 }
 
@@ -38,6 +40,6 @@ func dateFunc() string {
 	return t.Format(time.RFC3339)
 }
 
-func format(text string, a ...interface{}) string {
+func formatFunc(text string, a ...interface{}) string {
 	return fmt.Sprintf(text, a...)
 }
