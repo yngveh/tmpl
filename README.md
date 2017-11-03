@@ -10,6 +10,7 @@
 tmpl \
     -tmpl=./path/mytemple.tpl \
     -dest=./path/result.txt \
+    -data=./path/some.yaml
 ```
 ## Supported functions
 | Function    | Example                                    |
@@ -23,4 +24,4 @@ tmpl \
 | Trim        | {{ Trim " ! Text ! " "! " }}               |
 | TrimSpace   | {{ TrimSpace " ! Text ! " }}               |
 | File        | {{ File "./test/a_file.txt" }}             |
-| Date        | {{ Date }}                                 | 
+| Date        | {{ Date }}                                 |
