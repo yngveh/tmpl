@@ -1,7 +1,10 @@
 package engine
 
 import (
+	"encoding/json"
+	"gopkg.in/yaml.v2"
 	"io"
+	"io/ioutil"
 	"path"
 	"text/template"
 )
@@ -18,4 +21,26 @@ func Process(filename *string, out io.Writer, data *map[interface{}]interface{})
 		return err
 	}
 	return nil
+}
+
+func DataObject(dataReader io.Reader) (*map[interface{}]interface{}, error) {
+
+	d, err := ioutil.ReadAll(dataReader)
+	if err != nil {
+		return nil, err
+	}
+
+	j := make(map[string]interface{})
+	err = json.Unmarshal(d, &j)
+	if err == nil {
+		d, _ = yaml.Marshal(&j)
+	}
+
+	var t map[interface{}]interface{}
+	err = yaml.Unmarshal(d, &t)
+	if err != nil {
+		return nil, err
+	}
+
+	return &t, nil
 }

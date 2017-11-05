@@ -1,5 +1,4 @@
-# General template command using go templates
-
+# Simple template command using go templates
 
 ## Build and install
     make
@@ -9,7 +8,6 @@
 ```
 tmpl \
     -tmpl=./path/mytemple.tpl \
-    -dest=./path/result.txt \
     -data=./path/some.yaml
 ```
 ## Supported functions

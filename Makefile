@@ -19,10 +19,13 @@ build: test
 install: build
 	@cp target/tmpl $(GOPATH)/bin
 
-.PHONY: run
-run: build
+.PHONY: run-json
+run-json: build
+	@MYVAR=myvar ./target/tmpl -tmpl=./test/template-test.tpl -data=./test/test-data.json
+
+.PHONY: run-yaml
+run-yaml: build
 	@MYVAR=myvar ./target/tmpl -tmpl=./test/template-test.tpl -data=./test/test-data.yaml
-	@MYVAR=myvar ./target/tmpl -tmpl=./test/template-test.tpl -data=./test/test-data.yaml -dest=./target/result.txt
 
 .PHONY: clean
 clean:
