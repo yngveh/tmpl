@@ -11,5 +11,6 @@ File          : {{ File "./test/a_file.txt" }}
 File->ToUpper : {{ File "./test/a_file.txt" | ToUpper }}
 Date          : {{ Date }}
 Data          : {{ .root.var1 }}
+Format        : {{ Format "%s - %s" .root.var1 .root.var2 }}
 
 ======= END OF TEMPLATE ========
