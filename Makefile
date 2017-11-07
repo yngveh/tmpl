@@ -19,18 +19,10 @@ build: test
 install: build
 	@cp target/tmpl $(GOPATH)/bin
 
-.PHONY: run-json
-run-json: build
-	@MYVAR=myvar ./target/tmpl -tmpl=./test/template-test.tpl -data=./test/test-data.json
-
-.PHONY: run-yaml
-run-yaml: build
-	@MYVAR=myvar ./target/tmpl -tmpl=./test/template-test.tpl -data=./test/test-data.yaml
-
-.PHONY: run-pipe
-run-pipe: build
-	@echo USER='{{ Env "USER" }}' | ./target/tmpl -tmpl=- -data=./test/test-data.yaml
-
 .PHONY: clean
 clean:
 	rm -fr target
+
+.PHONY: test-all
+test-all:
+	docker run --rm -v $(shell pwd):/project -w /project alpine:3.5 ./test/test_it.sh
