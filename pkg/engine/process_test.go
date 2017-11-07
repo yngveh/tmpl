@@ -11,16 +11,17 @@ func Test_should_process(t *testing.T) {
 	data := make(map[interface{}]interface{})
 	data["key"] = "value"
 
-	b := bytes.NewBufferString("")
-	filename := "../../test/data.tpl"
-	err := Process(&filename, b, &data)
+	out := bytes.NewBufferString("")
+	template := bytes.NewBufferString("{{ .key }}")
+
+	err := Process(template, out, &data)
 
 	if err != nil {
-		t.Errorf("Failed parsing template %s, with: %v", filename, err)
+		t.Errorf("Failed parsing template %v, with: %v", template.String(), err)
 	}
 
-	if b.String() != "value" {
-		t.Errorf("Expected: value, Actual: '%s'", b.String())
+	if out.String() != "value" {
+		t.Errorf("Expected: value, Actual: '%s'", out.String())
 	}
 }
 

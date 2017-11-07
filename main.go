@@ -14,7 +14,7 @@ func checkError(err error) {
 
 func main() {
 
-	tmplFlag := flag.String("tmpl", "", "File to read. To read from stdin use '-'")
+	tmplFlag := flag.String("tmpl", "", "Template filename. Use '-' to read from stdin.")
 	dataFlag := flag.String("data", "", "Filename for file containing object data, json and yaml supported")
 	flag.Parse()
 
@@ -23,8 +23,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	out := os.Stdout
-
 	dataReader, err := os.Open(*dataFlag)
 	checkError(err)
 	defer dataReader.Close()
@@ -32,7 +30,18 @@ func main() {
 	data, err := engine.DataObject(dataReader)
 	checkError(err)
 
-	err = engine.Process(tmplFlag, out, data)
+	var source *os.File
+	if *tmplFlag == "-" {
+		source = os.Stdin
+	} else {
+		source, err = os.Open(*tmplFlag)
+		if err != nil {
+			panic(err)
+		}
+	}
+	defer source.Close()
+
+	err = engine.Process(source, os.Stdout, data)
 	checkError(err)
 
 }

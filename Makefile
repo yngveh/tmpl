@@ -27,6 +27,10 @@ run-json: build
 run-yaml: build
 	@MYVAR=myvar ./target/tmpl -tmpl=./test/template-test.tpl -data=./test/test-data.yaml
 
+.PHONY: run-pipe
+run-pipe: build
+	@echo USER='{{ Env "USER" }}' | ./target/tmpl -tmpl=- -data=./test/test-data.yaml
+
 .PHONY: clean
 clean:
 	rm -fr target

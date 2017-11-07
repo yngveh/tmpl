@@ -5,18 +5,22 @@ import (
 	"gopkg.in/yaml.v2"
 	"io"
 	"io/ioutil"
-	"path"
 	"text/template"
 )
 
-func Process(filename *string, out io.Writer, data *map[interface{}]interface{}) error {
-	t, err := template.New("").Funcs(funcMap).ParseFiles(*filename)
+func Process(source io.Reader, out io.Writer, data *map[interface{}]interface{}) error {
+
+	s, err := ioutil.ReadAll(source)
 	if err != nil {
 		return err
 	}
 
-	_, tmplName := path.Split(*filename)
-	err = t.ExecuteTemplate(out, tmplName, data)
+	t, err := template.New("").Funcs(funcMap).Parse(string(s))
+	if err != nil {
+		return err
+	}
+
+	err = t.Execute(out, data)
 	if err != nil {
 		return err
 	}
