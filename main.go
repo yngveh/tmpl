@@ -23,14 +23,21 @@ func main() {
 		os.Exit(1)
 	}
 
-	dataReader, err := os.Open(*dataFlag)
-	checkError(err)
-	defer dataReader.Close()
+	var (
+		data   *map[interface{}]interface{}
+		err    error
+		source *os.File
+	)
 
-	data, err := engine.DataObject(dataReader)
-	checkError(err)
+	if *dataFlag != "" {
+		dataReader, err := os.Open(*dataFlag)
+		checkError(err)
+		defer dataReader.Close()
 
-	var source *os.File
+		data, err = engine.DataObject(dataReader)
+		checkError(err)
+	}
+
 	if *tmplFlag == "-" {
 		source = os.Stdin
 	} else {
