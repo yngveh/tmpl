@@ -42,9 +42,7 @@ func main() {
 		source = os.Stdin
 	} else {
 		source, err = os.Open(*tmplFlag)
-		if err != nil {
-			panic(err)
-		}
+		checkError(err)
 	}
 	defer source.Close()
 

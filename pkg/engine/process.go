@@ -1,7 +1,6 @@
 package engine
 
 import (
-	"encoding/json"
 	"gopkg.in/yaml.v2"
 	"io"
 	"io/ioutil"
@@ -20,8 +19,7 @@ func Process(source io.Reader, out io.Writer, data *map[interface{}]interface{})
 		return err
 	}
 
-	err = t.Execute(out, data)
-	if err != nil {
+	if err = t.Execute(out, data); err != nil {
 		return err
 	}
 	return nil
@@ -29,22 +27,16 @@ func Process(source io.Reader, out io.Writer, data *map[interface{}]interface{})
 
 func DataObject(dataReader io.Reader) (*map[interface{}]interface{}, error) {
 
-	d, err := ioutil.ReadAll(dataReader)
+	data, err := ioutil.ReadAll(dataReader)
 	if err != nil {
 		return nil, err
 	}
 
-	j := make(map[string]interface{})
-	err = json.Unmarshal(d, &j)
-	if err == nil {
-		d, _ = yaml.Marshal(&j)
-	}
-
-	var t map[interface{}]interface{}
-	err = yaml.Unmarshal(d, &t)
+	var yamlMap map[interface{}]interface{}
+	err = yaml.Unmarshal(data, &yamlMap)
 	if err != nil {
 		return nil, err
 	}
 
-	return &t, nil
+	return &yamlMap, nil
 }
